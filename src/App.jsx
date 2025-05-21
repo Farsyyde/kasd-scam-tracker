@@ -22,6 +22,11 @@ export default function ScamTracker() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
+      <img
+        src="/kasd-mascot.png"
+        alt="KASD Mascot"
+        className="w-48 mx-auto mb-6 drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]"
+      />
       <h1 className="text-4xl font-bold text-yellow-400 mb-4">KASD Scam Tracker</h1>
       <p className="mb-6">No more rugs. The people have a weapon at last.</p>
 
