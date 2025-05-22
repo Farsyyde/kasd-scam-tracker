@@ -90,7 +90,7 @@ const fetchReports = async () => {
         <input name="tokenAddress" value={form.tokenAddress} onChange={handleChange} placeholder="Token Address" className="w-full p-2 mb-2 rounded bg-gray-700" required />
         <input name="scammerWallet" value={form.scammerWallet} onChange={handleChange} placeholder="Scammer Wallet (optional)" className="w-full p-2 mb-2 rounded bg-gray-700" />
         <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" className="w-full p-2 mb-2 rounded bg-gray-700" required />
-        <input type="text" name="evidence" value={form.evidence} onChange={handleChange} placeholder="Evidence URL (optional)" className="w-full p-2 mb-2 rounded bg-gray-700" / />
+        <input type="text" name="evidence" value={form.evidence} onChange={handleChange} placeholder="Evidence URL (optional)" className="w-full p-2 mb-2 rounded bg-gray-700" />
         <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="w-full p-2 mb-4 rounded bg-gray-700 text-white" />
         <button type="submit" className="bg-yellow-500 px-4 py-2 rounded font-bold">Submit</button>
       </form>
