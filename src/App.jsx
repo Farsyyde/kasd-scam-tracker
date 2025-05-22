@@ -36,10 +36,11 @@ const fetchReports = async () => {
 
   // Upload file to Supabase Storage if one is selected
   if (selectedFile) {
-    const fileName = `proofs/${Date.now()}_${selectedFile.name}`;
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('scam-proof')
-      .upload(fileName, selectedFile);
+  const { data: uploadData, error: uploadError } = await supabase.storage
+  .from('scam-proof')
+  .upload(fileName, selectedFile, {
+    upsert: true,
+  });
 
     if (uploadError) {
       console.error('File upload error:', uploadError);
