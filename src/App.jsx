@@ -29,7 +29,7 @@ const fetchReports = async () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
 
   let evidenceUrl = form.evidence;
@@ -37,7 +37,7 @@ const fetchReports = async () => {
   // Upload file to Supabase Storage if one is selected
   if (selectedFile) {
     const fileName = `proofs/${Date.now()}_${selectedFile.name}`;
-    const { data, error: uploadError } = await supabase.storage
+    const { data: uploadData, error: uploadError } = await supabase.storage
       .from('scam-proof')
       .upload(fileName, selectedFile);
 
@@ -46,19 +46,24 @@ const fetchReports = async () => {
       return;
     }
 
+    // Try to get the public URL of the uploaded file
     const { data: urlData, error: urlError } = supabase
-  .storage
-  .from('scam-proof')
-  .getPublicUrl(fileName);
+      .storage
+      .from('scam-proof')
+      .getPublicUrl(fileName);
 
-if (urlError) {
-  console.error('Error getting public URL:', urlError);
-} else if (urlData && urlData.publicUrl) {
-  evidenceUrl = urlData.publicUrl;
-  console.log('✅ Uploaded file URL:', evidenceUrl);
-} else {
-  console.warn('⚠️ No public URL returned for file.');
-}
+    if (urlError) {
+      console.error('Error getting public URL:', urlError);
+      return;
+    }
+
+    if (urlData && urlData.publicUrl) {
+      evidenceUrl = urlData.publicUrl;
+      console.log('✅ Uploaded file URL:', evidenceUrl);
+    } else {
+      console.warn('⚠️ No public URL returned for file.');
+    }
+  }
 
   // Insert report into DB
   const { error } = await supabase.from('scam_reports').insert([{
