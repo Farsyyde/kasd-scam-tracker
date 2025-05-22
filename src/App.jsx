@@ -46,12 +46,19 @@ const fetchReports = async () => {
       return;
     }
 
-    const { data: urlData } = supabase.storage
-      .from('scam-proof')
-      .getPublicUrl(fileName);
+    const { data: urlData, error: urlError } = supabase
+  .storage
+  .from('scam-proof')
+  .getPublicUrl(fileName);
 
-    evidenceUrl = urlData.publicUrl;
-  }
+if (urlError) {
+  console.error('Error getting public URL:', urlError);
+} else if (urlData && urlData.publicUrl) {
+  evidenceUrl = urlData.publicUrl;
+  console.log('✅ Uploaded file URL:', evidenceUrl);
+} else {
+  console.warn('⚠️ No public URL returned for file.');
+}
 
   // Insert report into DB
   const { error } = await supabase.from('scam_reports').insert([{
