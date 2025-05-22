@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from './supabaseClient';
 
 export default function ScamTracker() {
   const [scamReports, setScamReports] = useState([]);
@@ -9,6 +10,20 @@ export default function ScamTracker() {
     description: '',
     evidence: ''
   });
+  const [scamReports, setScamReports] = useState([]);
+
+const fetchReports = async () => {
+  const { data, error } = await supabase
+    .from('scam_reports')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) console.error(error);
+  else setScamReports(data);
+};
+  useEffect(() => {
+  fetchReports();
+}, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
