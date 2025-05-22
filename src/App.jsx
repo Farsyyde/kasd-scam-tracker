@@ -10,8 +10,7 @@ export default function ScamTracker() {
     description: '',
     evidence: ''
   });
-  const [scamReports, setScamReports] = useState([]);
-
+  
 const fetchReports = async () => {
   const { data, error } = await supabase
     .from('scam_reports')
@@ -29,11 +28,24 @@ const fetchReports = async () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setScamReports([...scamReports, form]);
-    setForm({ projectName: '', tokenAddress: '', scammerWallet: '', description: '', evidence: '' });
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const { error } = await supabase.from('scam_reports').insert([form]);
+
+  if (error) {
+    console.error('Submission error:', error);
+  } else {
+    setForm({
+      projectName: '',
+      tokenAddress: '',
+      scammerWallet: '',
+      description: '',
+      evidence: ''
+    });
+    fetchReports(); // Refresh after submission
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
