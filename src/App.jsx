@@ -41,6 +41,11 @@ const fetchReports = async () => {
   .upload(fileName, selectedFile, {
     upsert: true,
   });
+    if (uploadError) {
+  console.error('File upload error:', uploadError);
+} else {
+  console.log('✅ File uploaded successfully:', uploadData);
+}
 
     if (uploadError) {
       console.error('File upload error:', uploadError);
