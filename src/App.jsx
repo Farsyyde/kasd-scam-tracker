@@ -31,7 +31,12 @@ const fetchReports = async () => {
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-
+  
+  const token = grecaptcha.getResponse();
+  if (!token) {
+  alert('Please complete the reCAPTCHA');
+  return;
+}
   let evidenceUrl = form.evidence;
 
   // Upload file to Supabase Storage if one is selected
