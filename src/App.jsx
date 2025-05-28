@@ -110,6 +110,12 @@ const fetchReports = async () => {
         <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" className="w-full p-2 mb-2 rounded bg-gray-700" required />
         <input type="text" name="evidence" value={form.evidence} onChange={handleChange} placeholder="Evidence URL (optional)" className="w-full p-2 mb-2 rounded bg-gray-700" />
         <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="w-full p-2 mb-4 rounded bg-gray-700 text-white" />
+        <div className="mb-4">
+      <div
+        className="g-recaptcha"
+        data-sitekey="6LdI4E0rAAAAAAfXaBzlQOm4MuvmA_0f5giHjqIb">
+      </div>
+      </div>
         <button type="submit" className="bg-yellow-500 px-4 py-2 rounded font-bold">Submit</button>
       </form>
 
