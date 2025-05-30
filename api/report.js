@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  const { error } = await supabase.from('scam_reports').insert([
+  const { data, error } = await supabase.from('scam_reports').insert([
     {
       projectName,
       tokenAddress,
