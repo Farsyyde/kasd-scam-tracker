@@ -10,26 +10,33 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { project_name, token_address, description, scammer_wallet, evidence } = req.body;
+  const {
+    projectName,
+    tokenAddress,
+    description,
+    scammerWallet,
+    evidence
+  } = req.body;
 
-  if (!project_name || !token_address || !description) {
+  if (!projectName || !tokenAddress || !description) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
   const { error } = await supabase.from('scam_reports').insert([
     {
-      projectName: project_name,
-      tokenAddress: token_address,
+      projectName,
+      tokenAddress,
       description,
-      scammerWallet: scammer_wallet || '',
+      scammerWallet: scammerWallet || '',
       evidence: evidence || ''
     }
   ]);
 
   if (error) {
     console.error('❌ Supabase insert error:', error);
-    return res.status(500).json({ error: 'Failed to submit report' });
+    return res.status(500).json({ error: error.message || 'Failed to submit report' });
   }
 
   res.status(200).json({ message: 'Report submitted successfully' });
 };
+
