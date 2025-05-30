@@ -33,9 +33,9 @@ module.exports = async (req, res) => {
   ]);
 
   if (error) {
-    console.error('❌ Supabase insert error:', error);
-    return res.status(500).json({ error: error.message || 'Failed to submit report' });
-  }
+  console.error('❌ Supabase insert error:', error); // already here
+  return res.status(500).json({ error: error.message, details: error.details || error });
+}
   console.log('✅ Inserted data:', data);
   res.status(200).json({ message: 'Report submitted successfully' });
 };
